@@ -703,15 +703,6 @@ Cover.Size = UDim2.new(0, 784, 0, 426)
 UICorner_30.CornerRadius = UDim.new(0, 16)
 UICorner_30.Parent = Cover
 
-Effect.Name = "Effect"
-Effect.Parent = game.StarterGui.MainGUI.EffectScript
-Effect.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-Effect.BorderColor3 = Color3.fromRGB(0, 0, 0)
-Effect.BorderSizePixel = 0
-
-UICorner_31.CornerRadius = UDim.new(1, 0)
-UICorner_31.Parent = Effect
-
 
 local fake_module_scripts = {}
 
@@ -773,6 +764,16 @@ do
 	end
 	fake_module_scripts[script] = module_script
 end
+
+
+Effect.Name = "Effect"
+Effect.Parent = MainGUI.EffectScript
+Effect.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Effect.BorderColor3 = Color3.fromRGB(0, 0, 0)
+Effect.BorderSizePixel = 0
+
+UICorner_31.CornerRadius = UDim.new(1, 0)
+UICorner_31.Parent = Effect
 
 
 local function YYYEUW_fake_script()
@@ -862,33 +863,45 @@ local function YYYEUW_fake_script()
 
 
 	local function runTeamCheck()
-		if GUI:GetAttribute("TEAMCHECK") == true then
-			for _, plr in pairs(Players:GetChildren()) do
+		for _, plr in pairs(Players:GetChildren()) do
+			if GUI:GetAttribute("TEAMCHECK") == true then
 				task.wait()
 
 				if plr.Character and plr.Team == Players.LocalPlayer.Team then
 					if plr.Character:FindFirstChild("KESP_OUTLINE") then
-						plr.Character["KESP_OUTLINE"]:Destroy()
+						plr.Character["KESP_OUTLINE"].Enabled = false
 					end
 
 					if plr.Character:FindFirstChild("KESP_HITBOX") then
-						plr.Character["KESP_HITBOX"]:Destroy()
+						plr.Character["KESP_HITBOX"].Visible = false
 					end
 
 					if plr.Character.HumanoidRootPart:FindFirstChild("KESP_DOT") then
-						plr.Character.HumanoidRootPart["KESP_DOT"]:Destroy()
+						plr.Character.HumanoidRootPart["KESP_DOT"].Enabled = false
 					end
 
 					if plr.Character.HumanoidRootPart:FindFirstChild("KESP_LINE") then
-						plr.Character.HumanoidRootPart["KESP_LINE"]:Destroy()
+						plr.Character.HumanoidRootPart["KESP_LINE"].Enabled = false
+					end
+				end
+			else
+				task.wait()
+
+				if plr.Character and plr.Team == Players.LocalPlayer.Team then
+					if plr.Character:FindFirstChild("KESP_OUTLINE") then
+						plr.Character["KESP_OUTLINE"].Enabled = true
 					end
 
-					if plr.Character.HumanoidRootPart:FindFirstChild("KESP_A1") then
-						plr.Character.HumanoidRootPart["KESP_A1"]:Destroy()
+					if plr.Character:FindFirstChild("KESP_HITBOX") then
+						plr.Character["KESP_HITBOX"].Visible = true
 					end
 
-					if plr.Character.HumanoidRootPart:FindFirstChild("KESP_A2") then
-						plr.Character.HumanoidRootPart["KESP_A2"]:Destroy()
+					if plr.Character.HumanoidRootPart:FindFirstChild("KESP_DOT") then
+						plr.Character.HumanoidRootPart["KESP_DOT"].Enabled = true
+					end
+
+					if plr.Character.HumanoidRootPart:FindFirstChild("KESP_LINE") then
+						plr.Character.HumanoidRootPart["KESP_LINE"].Enabled = true
 					end
 				end
 			end
