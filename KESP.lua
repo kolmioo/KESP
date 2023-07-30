@@ -704,7 +704,7 @@ UICorner_30.CornerRadius = UDim.new(0, 16)
 UICorner_30.Parent = Cover
 
 Effect.Name = "Effect"
-Effect.Parent = game.StarterGui.MainGUI.EffectScript
+Effect.Parent = game.MainGUI.EffectScript
 Effect.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Effect.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Effect.BorderSizePixel = 0
