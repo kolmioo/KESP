@@ -704,7 +704,7 @@ UICorner_30.CornerRadius = UDim.new(0, 16)
 UICorner_30.Parent = Cover
 
 Effect.Name = "Effect"
-Effect.Parent = MainGUI.EffectScript
+Effect.Parent = game.StarterGui.MainGUI.EffectScript
 Effect.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
 Effect.BorderColor3 = Color3.fromRGB(0, 0, 0)
 Effect.BorderSizePixel = 0
@@ -720,55 +720,55 @@ do
 	script.Name = "EffectScript"
 	local function module_script()
 		local RippleEffect = {}
-		
+
 		function RippleEffect.AddEffect(UIInstance,Mouse,Duration,Color)
-		
+
 			local function Tween(Obj,Goal)
-		
+
 				game:GetService("TweenService"):Create(Obj,TweenInfo.new(Duration),Goal):Play()
-		
+
 			end
-		
+
 			local ASX,ASY = UIInstance.AbsoluteSize.X, UIInstance.AbsoluteSize.Y
-		
+
 			local APX,APY = UIInstance.AbsolutePosition.X, UIInstance.AbsolutePosition.Y
-		
+
 			local MX,MY = Mouse.X,Mouse.Y
-		
+
 			local Pos = UDim2.new(0,MX-APX,0,MY-APY)
-		
+
 			local UBC3 = UIInstance.BackgroundColor3
-		
+
 			local UR,UG,UB = UBC3.R, UBC3.G, UBC3.B
-		
+
 			local UI = Instance.new("Frame",UIInstance)
-		
+
 			UI.BackgroundColor3 = Color
-		
+
 			UI.Name = "Ripple"
-		
+
 			UI.ZIndex = 100001
-		
+
 			local Corner = Instance.new("UICorner",UI)
-		
+
 			Corner.CornerRadius = UDim.new(1,0)
-		
+
 			UI.AnchorPoint = Vector2.new(0.5,0.5)
-		
+
 			UI.Position = Pos
-		
+
 			local MS = UDim2.fromOffset(math.max(ASX,ASY),math.max(ASX,ASY))
-		
+
 			UI:TweenSize(MS,"Out","Sine",Duration)
-		
+
 			Tween(UI,{BackgroundTransparency = 1})
-		
+
 			wait(Duration)
-		
+
 			UI:Destroy()
-		
+
 		end
-		
+
 		return RippleEffect
 	end
 	fake_module_scripts[script] = module_script
@@ -791,16 +791,16 @@ local function YYYEUW_fake_script()
 	local Module = require(script.Parent.EffectScript)
 	local tInfo = TweenInfo.new(0.25, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
 	local tInfo2 = TweenInfo.new(0.1, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
-	
-	
+
+
 	local GUI = script.Parent
 	local topFrame = GUI.TopFrame
 	local mainFrame = topFrame.MainFrame
 	local coverFrame = topFrame.Cover
-	
+
 	topFrame.Draggable = true
 	topFrame.Active = true
-	
+
 	GUI:SetAttribute("DOT", false)
 	GUI:SetAttribute("OUTLINE", false)
 	GUI:SetAttribute("HITBOX", false)
@@ -808,7 +808,7 @@ local function YYYEUW_fake_script()
 	GUI:SetAttribute("TEAMCHECK", false)
 	GUI:SetAttribute("COLOR", false)
 	GUI:SetAttribute("COLORR", Color3.new(1, 0, 0))
-	
+
 	local closed = false
 	local cooldown = false
 	local dCooldown = false
@@ -817,12 +817,12 @@ local function YYYEUW_fake_script()
 	local rCooldown = false
 	local tCooldown = false
 	local clCooldown = false
-	
-	
+
+
 	local closeBTN = topFrame.CloseBTN
 	local minimizeBTN = topFrame.MinimizeBTN
-	
-	
+
+
 	local optionsFrame = mainFrame.OptionsFrame
 	local DotFrame = optionsFrame.Dot
 	local OutlineFrame = optionsFrame.Outline
@@ -835,58 +835,58 @@ local function YYYEUW_fake_script()
 	local mouse = game.Players.LocalPlayer:GetMouse()
 	local movingColourSlider = false
 	local movingDarknessSlider = false
-	
+
 	local dotBTN = DotFrame.CheckboxFrame.BTN
 	local outlineBTN = OutlineFrame.CheckboxFrame.BTN
 	local HitboxBTN = HitboxFrame.CheckboxFrame.BTN
 	local RenderLinesBTN = RenderLinesFrame.CheckboxFrame.BTN
 	local teamBTN = teamCheckFrame.CheckboxFrame.BTN
 	local colorBTN = colorFrame.CheckboxFrame.BTN
-	
-	
+
+
 	local function tweenIn(frame)
 		local tweenIn = tweenService:Create(frame, tInfo, { Size = UDim2.fromScale(1, 1) }):Play()
 	end
-	
+
 	local function tweenOut(frame)
 		local dtweenOut = tweenService:Create(frame, tInfo2, { Size = UDim2.fromScale(0, 0) }):Play()
 	end
-	
-	
+
+
 	DotFrame.CheckboxFrame.ActiveFrame.Size = UDim2.fromScale(0, 0)
 	OutlineFrame.CheckboxFrame.ActiveFrame.Size = UDim2.fromScale(0, 0)
 	HitboxFrame.CheckboxFrame.ActiveFrame.Size = UDim2.fromScale(0, 0)
 	RenderLinesFrame.CheckboxFrame.ActiveFrame.Size = UDim2.fromScale(0, 0)
 	teamCheckFrame.CheckboxFrame.ActiveFrame.Size = UDim2.fromScale(0, 0)
 	colorFrame.CheckboxFrame.ActiveFrame.Size = UDim2.fromScale(0, 0)
-	
-	
+
+
 	local function runTeamCheck()
 		if GUI:GetAttribute("TEAMCHECK") == true then
 			for _, plr in pairs(Players:GetChildren()) do
 				task.wait()
-	
+
 				if plr.Character and plr.Team == Players.LocalPlayer.Team then
 					if plr.Character:FindFirstChild("KESP_OUTLINE") then
 						plr.Character["KESP_OUTLINE"]:Destroy()
 					end
-	
+
 					if plr.Character:FindFirstChild("KESP_HITBOX") then
 						plr.Character["KESP_HITBOX"]:Destroy()
 					end
-	
+
 					if plr.Character.HumanoidRootPart:FindFirstChild("KESP_DOT") then
 						plr.Character.HumanoidRootPart["KESP_DOT"]:Destroy()
 					end
-	
+
 					if plr.Character.HumanoidRootPart:FindFirstChild("KESP_LINE") then
 						plr.Character.HumanoidRootPart["KESP_LINE"]:Destroy()
 					end
-	
+
 					if plr.Character.HumanoidRootPart:FindFirstChild("KESP_A1") then
 						plr.Character.HumanoidRootPart["KESP_A1"]:Destroy()
 					end
-	
+
 					if plr.Character.HumanoidRootPart:FindFirstChild("KESP_A2") then
 						plr.Character.HumanoidRootPart["KESP_A2"]:Destroy()
 					end
@@ -894,21 +894,21 @@ local function YYYEUW_fake_script()
 			end
 		end
 	end
-	
+
 	dotBTN.MouseButton1Click:Connect(function()
 		Module.AddEffect(dotBTN, Players.LocalPlayer:GetMouse(), 0.5, Color3.new(1, 1, 1))
-		
+
 		if not dCooldown then
 			dCooldown = true
-			
+
 			if GUI:GetAttribute("DOT") == false then
 				GUI:SetAttribute("DOT", true)
-				
+
 				tweenIn(DotFrame.CheckboxFrame.ActiveFrame)
-				
+
 				for _, plr in pairs(Players:GetChildren()) do
 					task.wait()
-					
+
 					if plr.Character and not plr.Character.HumanoidRootPart:FindFirstChild("KESP_DOT") then
 						local function add()
 							local bgui = Instance.new("BillboardGui")
@@ -916,24 +916,24 @@ local function YYYEUW_fake_script()
 							bgui.AlwaysOnTop = true
 							bgui.Name = "KESP_DOT"
 							bgui.Parent = plr.Character.HumanoidRootPart
-	
+
 							local frame = Instance.new("Frame")
-	
+
 							if GUI:GetAttribute("COLOR") == true then
 								frame.BackgroundColor3 = GUI:GetAttribute("COLORR")
 							else
 								frame.BackgroundColor3 = Color3.new(1, 1, 1)
 							end
-	
+
 							frame.Size = UDim2.new(1, 0, 1, 0)
 							frame.Name = "DOT"
 							frame.Parent = bgui
-	
+
 							local uic = Instance.new("UICorner")
 							uic.CornerRadius = UDim.new(1, 0)
 							uic.Parent = frame
 						end
-						
+
 						if GUI:GetAttribute("TEAMCHECK") == true then
 							if plr.Team ~= Players.LocalPlayer.Team then
 								add()
@@ -943,61 +943,61 @@ local function YYYEUW_fake_script()
 						end
 					end
 				end
-				
+
 				runTeamCheck()
-				
+
 				task.wait(.5)
 				dCooldown = false
 			else
 				GUI:SetAttribute("DOT", false)
-				
+
 				tweenOut(DotFrame.CheckboxFrame.ActiveFrame)
-				
+
 				for _, plr in pairs(Players:GetChildren()) do
 					task.wait()
-	
+
 					if plr.Character and plr.Character.HumanoidRootPart:FindFirstChild("KESP_DOT") then
 						plr.Character.HumanoidRootPart["KESP_DOT"]:Destroy()
 					end
 				end
-				
+
 				runTeamCheck()
-				
+
 				task.wait(.5)
 				dCooldown = false
 			end
 		end
 	end)
-	
+
 	outlineBTN.MouseButton1Click:Connect(function()
 		Module.AddEffect(outlineBTN, Players.LocalPlayer:GetMouse(), 0.5, Color3.new(1, 1, 1))
 		if not oCooldown then
 			oCooldown = true
-	
+
 			if GUI:GetAttribute("OUTLINE") == false then
 				GUI:SetAttribute("OUTLINE", true)
-	
+
 				tweenIn(OutlineFrame.CheckboxFrame.ActiveFrame)
-				
+
 				for _, plr in pairs(Players:GetChildren()) do
 					task.wait()
-	
+
 					if plr.Character and not plr.Character:FindFirstChild("KESP_OUTLINE") then
 						local function add()
 							local outline = Instance.new("Highlight")
-	
+
 							if GUI:GetAttribute("COLOR") == true then
 								outline.OutlineColor = GUI:GetAttribute("COLORR")
 							else
 								outline.OutlineColor = Color3.new(1, 1, 1)
 							end
-	
+
 							outline.FillTransparency = 1
 							outline.Name = "KESP_OUTLINE"
 							outline.Parent = plr.Character
 							outline.Adornee = plr.Character
 						end
-						
+
 						if GUI:GetAttribute("TEAMCHECK") == true then
 							if plr.Team ~= Players.LocalPlayer.Team then
 								add()
@@ -1007,42 +1007,42 @@ local function YYYEUW_fake_script()
 						end
 					end
 				end
-				
+
 				runTeamCheck()
-				
+
 				task.wait(.5)
 				oCooldown = false
 			else
 				GUI:SetAttribute("OUTLINE", false)
-	
+
 				tweenOut(OutlineFrame.CheckboxFrame.ActiveFrame)
-				
+
 				for _, plr in pairs(Players:GetChildren()) do
 					task.wait()
-	
+
 					if plr.Character and plr.Character:FindFirstChild("KESP_OUTLINE") then
 						plr.Character["KESP_OUTLINE"]:Destroy()
 					end
 				end
-				
+
 				runTeamCheck()
-				
+
 				task.wait(.5)
 				oCooldown = false
 			end
 		end
 	end)
-	
+
 	HitboxBTN.MouseButton1Click:Connect(function()
 		Module.AddEffect(HitboxBTN, Players.LocalPlayer:GetMouse(), 0.5, Color3.new(1, 1, 1))
 		if not hCooldown then
 			hCooldown = true
-	
+
 			if GUI:GetAttribute("HITBOX") == false then
 				GUI:SetAttribute("HITBOX", true)
-	
+
 				tweenIn(HitboxFrame.CheckboxFrame.ActiveFrame)
-				
+
 				for _, plr in pairs(Players:GetChildren()) do
 					if plr.Character then
 						local function add()
@@ -1050,17 +1050,17 @@ local function YYYEUW_fake_script()
 							box.Name = "KESP_HITBOX"
 							box.SurfaceTransparency = 1
 							box.LineThickness = 0.1
-	
+
 							if GUI:GetAttribute("COLOR") == true then
 								box.Color3 = GUI:GetAttribute("COLORR")
 							else
 								box.Color3 = Color3.new(1, 1, 1)
 							end
-	
+
 							box.Adornee = plr.Character
 							box.Parent = plr.Character
 						end
-						
+
 						if GUI:GetAttribute("TEAMCHECK") == true then
 							if plr.Team ~= game.Players.LocalPlayer.Team then
 								add()
@@ -1070,64 +1070,64 @@ local function YYYEUW_fake_script()
 						end
 					end
 				end
-				
+
 				runTeamCheck()
-				
+
 				task.wait(.5)
 				hCooldown = false
 			else
 				GUI:SetAttribute("HITBOX", false)
-	
+
 				tweenOut(HitboxFrame.CheckboxFrame.ActiveFrame)
-				
+
 				for _, plr in pairs(Players:GetChildren()) do
 					if plr.Character and plr.Character:FindFirstChild("KESP_HITBOX") then
 						plr.Character["KESP_HITBOX"]:Destroy()
 					end
 				end
-				
+
 				runTeamCheck()
-				
+
 				task.wait(.5)
 				hCooldown = false
 			end
 		end
 	end)
-	
+
 	RenderLinesBTN.MouseButton1Click:Connect(function()
 		Module.AddEffect(RenderLinesBTN, Players.LocalPlayer:GetMouse(), 0.5, Color3.new(1, 1, 1))
 		if not rCooldown then
 			rCooldown = true
-	
+
 			if GUI:GetAttribute("RENDERLINES") == false then
 				GUI:SetAttribute("RENDERLINES", true)
-	
+
 				tweenIn(RenderLinesFrame.CheckboxFrame.ActiveFrame)
-				
+
 				local attachment1 = Instance.new("Attachment")
 				attachment1.Name = "KESP_A2"
 				attachment1.Parent = Players.LocalPlayer.Character.HumanoidRootPart
-				
+
 				for _, plr in pairs(Players:GetChildren()) do
 					if plr.Character and Players.LocalPlayer.Character then
 						local function add()
 							local attachment = Instance.new("Attachment")
 							attachment.Name = "KESP_A1"
 							attachment.Parent = plr.Character.HumanoidRootPart
-	
+
 							local beam = Instance.new("Beam")
 							beam.Parent = plr.Character.HumanoidRootPart
 							beam.Attachment0 = attachment1
 							beam.Attachment1 = attachment
 							beam.Name = "KESP_LINE"
-	
+
 							if GUI:GetAttribute("COLOR") == true then
 								beam.Color = ColorSequence.new(GUI:GetAttribute("COLORR"))
 							else
 								ColorSequence.new(Color3.new(1, 1, 1))
 							end
 						end
-						
+
 						if GUI:GetAttribute("TEAMCHECK") == true then
 							if plr.Team ~= Players.LocalPlayer.Team then
 								add()
@@ -1137,383 +1137,383 @@ local function YYYEUW_fake_script()
 						end
 					end
 				end
-				
+
 				runTeamCheck()
-				
+
 				task.wait(.5)
 				rCooldown = false
 			else
 				GUI:SetAttribute("RENDERLINES", false)
-	
+
 				tweenOut(RenderLinesFrame.CheckboxFrame.ActiveFrame)
-				
+
 				for _, plr in pairs(Players:GetChildren()) do
 					if plr.Character and Players.LocalPlayer.Character then
 						if plr.Character.HumanoidRootPart:FindFirstChild("KESP_A1") then
 							plr.Character.HumanoidRootPart["KESP_A1"]:Destroy()
 						end
-							
+
 						if plr.Character.HumanoidRootPart:FindFirstChild("KESP_A2") then
 							plr.Character.HumanoidRootPart["KESP_A2"]:Destroy()
 						end
-						
+
 						if plr.Character.HumanoidRootPart:FindFirstChild("KESP_LINE") then
 							plr.Character.HumanoidRootPart["KESP_LINE"]:Destroy()
 						end
 					end
 				end
-				
+
 				runTeamCheck()
-				
+
 				task.wait(.5)
 				rCooldown = false
 			end
 		end
 	end)
-	
-	
+
+
 	teamBTN.MouseButton1Click:Connect(function()
 		Module.AddEffect(teamBTN, Players.LocalPlayer:GetMouse(), 0.5, Color3.new(1, 1, 1))
 		if not tCooldown then
 			tCooldown = true
-	
+
 			if GUI:GetAttribute("TEAMCHECK") == false then
 				GUI:SetAttribute("TEAMCHECK", true)
-	
+
 				tweenIn(teamCheckFrame.CheckboxFrame.ActiveFrame)
-				
+
 				runTeamCheck()
-				
+
 				task.wait(.5)
 				tCooldown = false
 			else
 				GUI:SetAttribute("TEAMCHECK", false)
-	
+
 				tweenOut(teamCheckFrame.CheckboxFrame.ActiveFrame)
-				
+
 				runTeamCheck()
-				
+
 				task.wait(.5)
 				tCooldown = false
 			end
 		end
 	end)
-	
-	
+
+
 	colorBTN.MouseButton1Click:Connect(function()
 		Module.AddEffect(colorBTN, Players.LocalPlayer:GetMouse(), 0.5, Color3.new(1, 1, 1))
 		if not clCooldown then
 			clCooldown = true
-	
+
 			if GUI:GetAttribute("COLOR") == false then
 				GUI:SetAttribute("COLOR", true)
-	
+
 				tweenIn(colorFrame.CheckboxFrame.ActiveFrame)
-				
+
 				for _, plr in pairs(Players:GetChildren()) do
 					task.wait()
-					
+
 					if plr.Character then
 						if plr.Character:FindFirstChild("KESP_OUTLINE") then
 							plr.Character["KESP_OUTLINE"].OutlineColor = GUI:GetAttribute("COLORR")
 						end
-	
+
 						if plr.Character:FindFirstChild("KESP_HITBOX") then
 							plr.Character["KESP_HITBOX"].Color3 = GUI:GetAttribute("COLORR")
 						end
-	
+
 						if plr.Character.HumanoidRootPart:FindFirstChild("KESP_DOT") then
 							plr.Character.HumanoidRootPart["KESP_DOT"].DOT.BackgroundColor3 = GUI:GetAttribute("COLORR")
 						end
-	
+
 						if plr.Character.HumanoidRootPart:FindFirstChild("KESP_LINE") then
 							plr.Character.HumanoidRootPart["KESP_LINE"].Color = ColorSequence.new(GUI:GetAttribute("COLORR"))
 						end
 					end
 				end
-				
+
 				runTeamCheck()
-				
+
 				task.wait(.5)
 				clCooldown = false
 			else
 				GUI:SetAttribute("COLOR", false)
-	
+
 				tweenOut(colorFrame.CheckboxFrame.ActiveFrame)
-				
+
 				for _, plr in pairs(Players:GetChildren()) do
 					task.wait()
-					
+
 					if plr.Character then
 						if plr.Character:FindFirstChild("KESP_OUTLINE") then
 							plr.Character["KESP_OUTLINE"].OutlineColor = Color3.new(1, 1, 1)
 						end
-	
+
 						if plr.Character:FindFirstChild("KESP_HITBOX") then
 							plr.Character["KESP_HITBOX"].Color3 = Color3.new(1, 1, 1)
 						end
-	
+
 						if plr.Character.HumanoidRootPart:FindFirstChild("KESP_DOT") then
 							plr.Character.HumanoidRootPart["KESP_DOT"].DOT.BackgroundColor3 = Color3.new(1, 1, 1)
 						end
-	
+
 						if plr.Character.HumanoidRootPart:FindFirstChild("KESP_LINE") then
 							plr.Character.HumanoidRootPart["KESP_LINE"].Color = ColorSequence.new(Color3.new(1, 1, 1))
 						end
 					end
 				end
-				
+
 				runTeamCheck()
-				
+
 				task.wait(.5)
 				clCooldown = false
 			end
 		end
 	end)
-	
-	
+
+
 	closeBTN.MouseButton1Click:Connect(function()
 		Module.AddEffect(closeBTN, Players.LocalPlayer:GetMouse(), 0.5, Color3.new(1, 1, 1))
 		if not cooldown then
 			cooldown = true
-			
+
 			if not closed then
 				for _, plr in pairs(Players:GetChildren()) do
 					task.wait()
-	
+
 					if plr.Character then
 						if plr.Character:FindFirstChild("KESP_OUTLINE") then
 							plr.Character["KESP_OUTLINE"]:Destroy()
 						end
-	
+
 						if plr.Character:FindFirstChild("KESP_HITBOX") then
 							plr.Character["KESP_HITBOX"]:Destroy()
 						end
-	
+
 						if plr.Character.HumanoidRootPart:FindFirstChild("KESP_DOT") then
 							plr.Character.HumanoidRootPart["KESP_DOT"]:Destroy()
 						end
-	
+
 						if plr.Character.HumanoidRootPart:FindFirstChild("KESP_LINE") then
 							plr.Character.HumanoidRootPart["KESP_LINE"]:Destroy()
 						end
-	
+
 						if plr.Character.HumanoidRootPart:FindFirstChild("KESP_A1") then
 							plr.Character.HumanoidRootPart["KESP_A1"]:Destroy()
 						end
-	
+
 						if plr.Character.HumanoidRootPart:FindFirstChild("KESP_A2") then
 							plr.Character.HumanoidRootPart["KESP_A2"]:Destroy()
 						end
 					end
 				end
-	
+
 				for i = 1, 10 do
 					task.wait()
 					coverFrame.Transparency = 1 - i / 10
 				end
-	
+
 				for _, item in pairs(topFrame:GetChildren()) do
 					if item:IsA("Frame") and item.Name ~= "Cover" then
 						item.Visible = false
 					end
 				end
-	
+
 				coverFrame:TweenSize(UDim2.new(0, 784, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Sine, 1)
-	
+
 				wait(1)
-	
+
 				for i = 1, 10 do
 					task.wait()
-	
+
 					closeBTN.TextTransparency = i / 10
 					minimizeBTN.TextTransparency = i / 10
 					topFrame.Title.TextTransparency = i / 10
 				end
-	
+
 				topFrame:TweenSize(UDim2.new(0, 0, 0, 67), Enum.EasingDirection.Out, Enum.EasingStyle.Sine, 1)
-	
+
 				wait(1)
 				GUI:Destroy()
 			else
 				for i = 1, 10 do
 					task.wait()
-	
+
 					closeBTN.TextTransparency = i / 10
 					minimizeBTN.TextTransparency = i / 10
 					topFrame.Title.TextTransparency = i / 10
 				end
-	
+
 				topFrame:TweenSize(UDim2.new(0, 0, 0, 67), Enum.EasingDirection.Out, Enum.EasingStyle.Sine, 1)
-	
+
 				wait(1)
 				GUI:Destroy()
 			end
 		end
 	end)
-	
+
 	minimizeBTN.MouseButton1Click:Connect(function()
 		Module.AddEffect(minimizeBTN, Players.LocalPlayer:GetMouse(), 0.5, Color3.new(1, 1, 1))
 		if not cooldown then
 			cooldown = true
-	
+
 			if not closed then
 				closed = true
 				minimizeBTN.Text = "+"
-				
+
 				for i = 1, 10 do
 					task.wait()
 					coverFrame.Transparency = 1 - i / 10
 				end
-				
+
 				for _, item in pairs(topFrame:GetChildren()) do
 					if item:IsA("Frame") and item.Name ~= "Cover" then
 						item.Visible = false
 					end
 				end
-				
+
 				coverFrame:TweenSize(UDim2.new(0, 784, 0, 0), Enum.EasingDirection.Out, Enum.EasingStyle.Sine, 1)
-				
+
 				wait(1)
 				cooldown = false
 			else
 				closed = false
 				minimizeBTN.Text = "-"
-				
+
 				coverFrame:TweenSize(UDim2.new(0, 784, 0, 426), Enum.EasingDirection.Out, Enum.EasingStyle.Sine, 1)
-				
+
 				wait(1)
-	
+
 				for _, item in pairs(topFrame:GetChildren()) do
 					if item:IsA("Frame") and item.Name ~= "Cover" then
 						item.Visible = true
 					end
 				end
-				
+
 				for i = 1, 10 do
 					task.wait()
 					coverFrame.Transparency = i / 10
 				end
-				
+
 				cooldown = false
 			end
 		end
 	end)
-	
+
 	GUI:GetAttributeChangedSignal("COLORR"):Connect(function()
 		if GUI:GetAttribute("COLOR") == true then
 			for _, plr in pairs(Players:GetChildren()) do
 				task.wait()
-	
+
 				if plr.Character then
 					if plr.Character:FindFirstChild("KESP_OUTLINE") then
 						plr.Character["KESP_OUTLINE"].OutlineColor = GUI:GetAttribute("COLORR")
 					end
-	
+
 					if plr.Character:FindFirstChild("KESP_HITBOX") then
 						plr.Character["KESP_HITBOX"].Color3 = GUI:GetAttribute("COLORR")
 					end
-	
+
 					if plr.Character.HumanoidRootPart:FindFirstChild("KESP_DOT") then
 						plr.Character.HumanoidRootPart["KESP_DOT"].DOT.BackgroundColor3 = GUI:GetAttribute("COLORR")
 					end
-	
+
 					if plr.Character.HumanoidRootPart:FindFirstChild("KESP_LINE") then
 						plr.Character.HumanoidRootPart["KESP_LINE"].Color = ColorSequence.new(GUI:GetAttribute("COLORR"))
 					end
 				end
 			end
-			
+
 			runTeamCheck()
 		end
 	end)
-	
+
 	Players.LocalPlayer.Changed:Connect(runTeamCheck)
-	
+
 	colourSlider.MouseButton1Down:Connect(function()
-	
+
 		movingColourSlider = true
 	end)
-	
+
 	colourGradientFrame.MouseButton1Down:Connect(function()
-	
+
 		movingColourSlider = true
 	end)
-	
+
 	colourSlider.MouseButton1Up:Connect(function()
-	
+
 		movingColourSlider = false
 	end)
-	
+
 	colourGradientFrame.MouseButton1Up:Connect(function()
-	
+
 		movingColourSlider = false
 	end)
-	
+
 	mouse.Button1Up:Connect(function()
-	
+
 		movingColourSlider = false
 		movingDarknessSlider = false
 	end)
-	
+
 	mouse.Move:Connect(function()
-	
+
 		if movingColourSlider then
-	
+
 			local xOffset = (mouse.X - colourGradientFrame.AbsolutePosition.X)
-	
+
 			xOffset = math.clamp(xOffset, 0, colourGradientFrame.AbsoluteSize.X)
-	
+
 			local sliderPosNew = UDim2.new(0, xOffset, colourSlider.Position.Y)
 			colourSlider.Position = sliderPosNew
 		end
 	end)
-	
+
 	local function returnColour(percentage, gradientKeyPoints)
-	
+
 		local leftColour = gradientKeyPoints[1]
 		local rightColour = gradientKeyPoints[#gradientKeyPoints]
-	
+
 		local lerpPercent = 0.5
 		local colour = leftColour.Value
-	
-	
+
+
 		for i = 1, #gradientKeyPoints - 1 do
-	
+
 			if gradientKeyPoints[i].Time <= percentage and gradientKeyPoints[i + 1].Time >= percentage then
-	
+
 				leftColour = gradientKeyPoints[i]
 				rightColour = gradientKeyPoints[i + 1]
-	
+
 				lerpPercent = (percentage - leftColour.Time) / (rightColour.Time - leftColour.Time)
-	
+
 				colour = leftColour.Value:Lerp(rightColour.Value, lerpPercent)
-	
+
 				return colour
 			end
 		end
 	end
-	
+
 	local function updateColourPreview()
-	
+
 		local colourMinXPos = colourGradientFrame.AbsolutePosition.X
 		local colourMaxXPos = colourMinXPos + colourGradientFrame.AbsoluteSize.X
-	
+
 		local colourXPixelSize = colourMaxXPos - colourMinXPos
-	
+
 		local colourSliderX = colourSlider.AbsolutePosition.X
-	
+
 		local colourXPos = (colourSliderX - colourMinXPos) / colourXPixelSize
-	
+
 		local colour = returnColour(colourXPos, colourGradientFrame.ColourGradient.Color.Keypoints)
 		local colourR, colourG, colourB = math.floor(colour.R * 255), math.floor(colour.G * 255), math.floor(colour.B * 255)
-	
+
 		local resultColour = Color3.fromRGB(colourR, colourG, colourB)
-	
+
 		script.Parent:SetAttribute("COLORR", resultColour)
 		colorFrame.Title.TextColor3 = resultColour
 	end
-	
+
 	colourSlider:GetPropertyChangedSignal("Position"):Connect(updateColourPreview)
 end
 coroutine.wrap(YYYEUW_fake_script)()
